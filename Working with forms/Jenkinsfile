@@ -10,13 +10,7 @@ pipeline {
         SONAR_TOKEN = credentials('Task8-Token')
     }
 
-    stages {
-
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Group-Two-AOOP/Task-08'
-            }
-        }
+  
 
         stage('Build') {
             steps {
