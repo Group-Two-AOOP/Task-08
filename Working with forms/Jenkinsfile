@@ -21,18 +21,25 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean compile'
+                dir('Working with forms'){
+                    bat 'mvn clean compile'
+                    
             }
         }
+    }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                dir('Working with forms'){
+                     bat 'mvn test'
+               
             }
         }
+    }
 
         stage('SonarQube Analysis') {
             steps {
+                dir('Working with forms'){
                 withSonarQubeEnv('SonarQube') {
                     bat """
                     mvn sonar:sonar \
@@ -42,6 +49,7 @@ pipeline {
                 }
             }
         }
+    }
 
         stage('Quality Gate') {
             steps {
