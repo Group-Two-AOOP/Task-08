@@ -52,13 +52,13 @@ pipeline {
         }
 
         stage('Deploy') {
-            when {
-                currentBuild.currentResult == 'SUCCESS' }
-            }
-            steps {
+              steps {
                 echo 'Deploying to staging...'
-                sh 'echo Deployment done'
+               
             }
+           
+            }
+          
         }
     }
 
