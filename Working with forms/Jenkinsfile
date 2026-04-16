@@ -10,7 +10,14 @@ pipeline {
         SONAR_TOKEN = credentials('Task8-Token')
     }
 
-  
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Group-Two-AOOP/Task-08.git'
+            }
+        }
 
         stage('Build') {
             steps {
@@ -30,8 +37,7 @@ pipeline {
                     sh """
                     mvn sonar:sonar \
                     -Dsonar.projectKey=Task8-Testing \
-                    -Dsonar.host.url=$SONAR_HOST_URL \
-                    -Dsonar.login=$SONAR_TOKEN
+                    -Dsonar.token=$SONAR_TOKEN
                     """
                 }
             }
@@ -46,22 +52,26 @@ pipeline {
         }
 
         stage('Deploy') {
-              steps {
+            when {
+                expression { currentBuild.currentResult == 'SUCCESS' }
+            }
+            steps {
                 echo 'Deploying to staging...'
-               
             }
-           
-            }
-          
         }
     }
 
     post {
         success {
-            echo 'Build SUCCESS'
+            echo 'PIPELINE SUCCESS'
         }
+
         failure {
-            echo 'Build FAILED'
+            echo 'PIPELINE FAILED'
+        }
+
+        always {
+            echo 'Cleaning up...'
         }
     }
-
+}
