@@ -30,14 +30,13 @@ pipeline {
             }
         }
 
-        stage('SonarCloud Analysis') {
+        stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarCloud') {
+                withSonarQubeEnv('SonarQube') {
                     bat """
                     mvn sonar:sonar \
                       -Dsonar.organization=group-two-aoop \
                       -Dsonar.projectKey=Group-Two-AOOP_Task-08 \
-                      -Dsonar.host.url=https://sonarcloud.io \
                       -Dsonar.login=$SONAR_TOKEN
                     """
                 }
